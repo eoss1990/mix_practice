@@ -1,0 +1,39 @@
+<services>
+    <service id="18615720100" name="firstService" class="com.seeyon.workflow.Service">
+        <rout>
+            <adapter id="1">
+                    <adapter id="2">
+                        <adapter id="4"/>
+                    </adapter>
+                    <adapter id="3">
+                        <adapter id="4"/>
+                    </adapter>
+            </adapter>
+        </rout>
+        <adapters>
+            <adapter id="1" class="com.seeyon.workflow.adapter.Jdbc">
+                <property name="condition" value=""/>
+                <property name="dataSourceId" value="8888"/>
+                <property name="userName" value="yangyu"/>
+                <property name="passWord" value="123456"/>
+            </adapter>
+            <adapter id="2" class="com.seeyon.workflow.adapter.Mapper">
+                <property name="condition" value="true"/>
+                <property name="inBound" value="person"/>
+                <property name="outBound" value="woman"/>
+            </adapter>
+            <adapter id="3" class="com.seeyon.workflow.adapter.Mapper">
+                <property name="condition" value="true"/>
+                <property name="inBound" value="person"/>
+                <property name="outBound" value="man"/>
+            </adapter>
+            <adapter id="4" class="com.seeyon.workflow.adapter.Soap">
+                <property name="condition" value=""/>
+                <property name="url" value="http://localhost:8080"/>
+                <property name="userName" value="yangyu"/>
+                <property name="passWord" value="123456"/>
+                <property name="method" value="create"/>
+            </adapter>
+        </adapters>
+    </service>
+</services>

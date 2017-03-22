@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--测试SpringBean生命周期-->
+    <bean id="beanSelf" class="com.seeyon.SpringBean.BeanSelf" init-method="myInit" destroy-method="mydestory" lazy-init="true" p:name="杨宇"/>
+    <bean class="com.seeyon.SpringBean.MyBeanPostProcessor"/>
+
+    <!--测试Spring ApplicationCustomerEvent-->
+    <bean class="com.seeyon.SpringBean.StartEventHandler"></bean>
+
+    <!--测试自己发布自定义的Event-->
+    <bean id="customerEventPublisher" class="com.seeyon.SpringBean.customerEvent.CustomerEventPublisher"></bean>
+    <bean class="com.seeyon.SpringBean.customerEvent.CustomerEventListener"></bean>
+
+</beans>

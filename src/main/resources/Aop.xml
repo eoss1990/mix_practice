@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启自动扫描-->
+    <context:component-scan base-package="com.seeyon.proxy"/>
+
+    <!--配置一个代理对象bean-->
+    <!--<bean id="beanProxy" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+        <!--&lt;!&ndash;代理的接口&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="interfaces" value="com.seeyon.proxy.BeanInterFace"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;代理的对象实例bean&ndash;&gt;-->
+        <!--<property name="target" ref="bean"/>-->
+        <!--&lt;!&ndash;拦截器实例bean（也就是增强实例）&ndash;&gt;-->
+        <!--<property name="interceptorNames">-->
+            <!--<list>-->
+                <!--<value>aroundAdvice</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+
+    <!--引入增强-->
+    <!--<bean id="introProxy" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+        <!--<property name="interfaces" value="com.seeyon.proxy.springAop.Apology"/>-->
+        <!--<property name="target" ref="bean"/>-->
+        <!--<property name="interceptorNames" value="introAdvice"/>-->
+        <!--<property name="proxyTargetClass" value="true"/>-->
+    <!--</bean>-->
+
+
+
+    <!--带切面的增强-->
+    <!--<bean id="advisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">-->
+        <!--<property name="advice" ref="aroundAdvice"/>-->
+        <!--<property name="pattern" value="com.seeyon.proxy.Bean.good.*"/>-->
+    <!--</bean>-->
+    <!--<bean id="beanAdvisorProxy" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+        <!--<property name="target" ref="bean"/>-->
+        <!--<property name="interceptorNames" value="advisor"/>-->
+        <!--<property name="proxyTargetClass" value="true"/>-->
+    <!--</bean>-->
+    <!--DefaultAdvisorAutoProxyCreator可以自动扫描所有切面类，并为其自动生成代理-->
+    <!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">-->
+        <!--<property name="optimize" value="true"/>-->
+    <!--</bean>-->
+
+
+
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <!--只为后缀名为"ean"的Bean生成代理-->
+        <property name="beanNames" value="*ean"/>
+        <property name="interceptorNames" value="aroundAdvice"/>
+        <!--使用cglibProxy-->
+        <!--<property name="proxyTargetClass" value="true"/>-->
+        <!--创建代理使用优化策略，有接口就使用JDK动态代理，没有接口就使用cglib-->
+        <property name="optimize" value="true"/>
+    </bean>
+
+
+</beans>

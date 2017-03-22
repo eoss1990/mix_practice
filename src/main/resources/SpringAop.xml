@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <bean id="student" class="com.seeyon.SpringBean.aop.Student" p:age="27" p:name="yangyu" lazy-init="true"></bean>
+    <bean id="logging" class="com.seeyon.SpringBean.aop.Logging"></bean>
+    <bean id="people" class="com.seeyon.SpringBean.aop.People"></bean>
+
+    <!--注解方式配置Spring AOP，Spring会自动到已注册的bean中去寻找@Aspect注解标记的class-->
+    <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
+
+    <!--XML方式配置Spring AOP-->
+    <aop:config>
+        <aop:aspect id="log" ref="logging">
+            <aop:pointcut id="studentMethod" expression="execution(* com.seeyon.SpringBean.aop.Student.get*(..))"/>
+            <!--<aop:pointcut id="studentMethod" expression="execution(* com.seeyon.SpringBean.aop..*.*(..))"/>-->
+            <aop:before pointcut-ref="studentMethod" method="beforeAdvice"/>
+            <aop:after pointcut-ref="studentMethod" method="afterAdvice"/>
+        </aop:aspect>
+    </aop:config>
+
+
+    <!--事物管理-->
+    <!--<aop:config proxy-target-class="true">-->
+        <!--<aop:pointcut id="studentGetMethod"-->
+                      <!--expression="execution(* com.seeyon.SpringBean.aop..*.*(..))" />-->
+        <!--<aop:advisor pointcut-ref="studentGetMethod" advice-ref="txAdvice" />-->
+    <!--</aop:config>-->
+
+    <!--<tx:advice id="txAdvice" transaction-manager="txManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="*" />-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+    <!--<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"/>-->
+</beans>
