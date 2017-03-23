@@ -2,9 +2,7 @@ package com.seeyon.cxf.rest;
 
 import com.seeyon.mybatis.pojo.People;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +17,16 @@ public class Service {
     @Produces(MediaType.APPLICATION_JSON)
     public List<People> getAll(){
         People people = new People("1","2","3","4","5");
+        return Arrays.asList(people);
+    }
+
+    @POST
+    @Path("update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<People> getPeople(People peo){
+        System.out.println(peo.getName());
+        People people = new People("10","2","3","4","5");
         return Arrays.asList(people);
     }
 }
